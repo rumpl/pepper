@@ -1,0 +1,29 @@
+Pepper\Rule\TooManyMethods:
+  level: error
+  params:
+    threshold: 2
+
+Pepper\Rule\MethodTooLong:
+  level: warning
+  params:
+    threshold: 35
+
+Pepper\Rule\UnnecessaryIf:
+  level: notice
+
+Pepper\Rule\GlobalVariable:
+  level: error
+
+Pepper\Rule\UndefinedVariable:
+  level: error
+
+Pepper\Rule\DoubleEquals:
+  level: warning
+
+Pepper\Rule\UnnecessaryElse:
+  level: warning
+
+Pepper\Rule\NestingTooDeep:
+  level: warning
+  params:
+    threshold: 2

@@ -29,6 +29,13 @@ use Pepper\PepperRule;
 
 class MethodTooLong extends PepperRule
 {
+    private $threshold;
+
+    public function __construct($report, $threshold)
+    {
+        parent::__construct($report);
+        $this->threshold = $threshold;
+    }
     public function enterNode(\PHPParser_Node $node)
     {
         if (!($node instanceof \PHPParser_Node_Stmt_ClassMethod)) {
@@ -45,7 +52,7 @@ class MethodTooLong extends PepperRule
 
         $lineNumber = $endLine - $startLine;
 
-        if ($lineNumber > 3) {
+        if ($lineNumber > $this->threshold) {
             $this->addMessage($node);
         }
     }
