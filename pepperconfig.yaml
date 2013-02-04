@@ -1,7 +1,7 @@
 Pepper\Rule\TooManyMethods:
   level: error
   params:
-    threshold: 2
+    threshold: 15
 
 Pepper\Rule\MethodTooLong:
   level: warning
@@ -26,4 +26,5 @@ Pepper\Rule\UnnecessaryElse:
 Pepper\Rule\NestingTooDeep:
   level: warning
   params:
-    threshold: 2
+    threshold: 3
+
