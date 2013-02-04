@@ -26,9 +26,18 @@
 namespace Pepper\Rule;
 
 use Pepper\PepperRule;
+use Pepper\Report\Report;
 
 class TooManyMethods extends PepperRule
 {
+    private $threshold;
+
+    public function __construct(Report $report, $threshold)
+    {
+        parent::__construct($report);
+        $this->threshold = $threshold;
+    }
+
     public function enterNode(\PHPParser_Node $node)
     {
         if (!($node instanceof \PHPParser_Node_Stmt_Class)) {
@@ -42,7 +51,7 @@ class TooManyMethods extends PepperRule
             }
         }
 
-        if ($numMethods > 3) {
+        if ($numMethods > $this->threshold) {
             $this->addMessage($node);
         }
     }
