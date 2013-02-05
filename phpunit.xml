@@ -1,7 +1,8 @@
-<?xml charset="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="true"
          backupStaticAttributes="false"
          cacheTokens="false"
+         bootstrap="vendor/autoload.php"
          colors="false"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -18,7 +19,7 @@
          verbose="true">
     <testsuites>
         <testsuite name="Rules Test Suite">
-            <directory>Pepper/Rule/*.php files</directory>
+            <directory>test</directory>
         </testsuite>
     </testsuites>
 </phpunit>
