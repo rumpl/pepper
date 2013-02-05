@@ -1,5 +1,5 @@
 {
-    "hash": "51aaa70d795792c5e0c2790223a0efd8",
+    "hash": "24717f8a3f243e446d7d0bb9a4f50223",
     "packages": [
         {
             "name": "kevinlebrun/colors.php",
@@ -540,23 +540,28 @@
         },
         {
             "name": "ulrichsg/getopt-php",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git://github.com/ulrichsg/getopt-php.git",
-                "reference": "1.0.0"
+                "reference": "2321b425d0117091f42c4a887b31ee30b79dd330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ulrichsg/getopt-php/zipball/1.0.0",
-                "reference": "1.0.0",
+                "url": "https://api.github.com/repos/ulrichsg/getopt-php/zipball/2321b425d0117091f42c4a887b31ee30b79dd330",
+                "reference": "2321b425d0117091f42c4a887b31ee30b79dd330",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-04 12:22:39",
+            "time": "2012-12-14 16:37:47",
             "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ulrichsg": "src"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -579,6 +584,7 @@
     "stability-flags": {
         "nikic/php-parser": 20,
         "symfony/dependency-injection": 20,
-        "kevinlebrun/colors.php": 20
+        "kevinlebrun/colors.php": 20,
+        "ulrichsg/getopt-php": 20
     }
 }

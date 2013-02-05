@@ -7,12 +7,38 @@ use Pepper\Report\ConsoleReport;
 use Pepper\Pepper;
 use Symfony\Component\Yaml\Yaml;
 use Colors\Color;
+use Ulrichsg\Getopt;
 
-$ar = Yaml::parse(__DIR__ . '/config.yaml');
-$par = Yaml::parse('./pepperconfig.yaml');
+$color = new Color;
 
-$pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
+print $color->fg('green', 'Pepper 0.0.1 by Djordje Lukic') . PHP_EOL . PHP_EOL;
 
-$report = $pepper->analyzeFile($argv[1]);
+try {
+    $options = new Getopt(array(
+        array('f', 'file', Getopt::REQUIRED_ARGUMENT, 'File to analyze'),
+        array('c', 'configuration', Getopt::REQUIRED_ARGUMENT, 'Alternatie configuration file'),
+        array('h', 'help', Getopt::NO_ARGUMENT, 'Show this help'),
+    ));
 
-$report->dump();
+    $options->parse();
+
+    if ($options->getOption('h') || count($options->getOptions()) === 0) {
+        $options->showHelp();
+        exit(0);
+    }
+
+    $conf = $options->getOption('c');
+    if ($conf === NULL) {
+        $conf = './pepperconfig.yaml';
+    }
+
+    $ar = Yaml::parse(__DIR__ . '/config.yaml');
+    $par = Yaml::parse($conf);
+
+    $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
+
+    $report = $pepper->analyzeFile($options->getOption('file'));
+    $report->dump();
+} catch (Exception $e) {
+    print $color->fg('red', $e->getMessage()) . PHP_EOL . PHP_EOL;
+}

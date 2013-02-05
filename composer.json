@@ -10,6 +10,6 @@
         "symfony/dependency-injection": "2.2.*@dev",
         "kevinlebrun/colors.php": "dev-master",
         "symfony/yaml": "v2.1.7",
-        "ulrichsg/getopt-php": "1.0.0"
+        "ulrichsg/getopt-php": "dev-master"
     }
 }
