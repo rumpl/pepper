@@ -38,6 +38,11 @@ abstract class PepperTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $code;
 
+    /**
+     * Setup the pepper instance with a Dummy report
+     *
+     * @param $configuration array
+     */
     public function setUpPepper($configuration)
     {
         $this->pepper = new Pepper(new DummyReport, $configuration);

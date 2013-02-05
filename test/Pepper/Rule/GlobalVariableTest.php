@@ -27,7 +27,6 @@ require_once 'PepperTestCase.php';
 
 class GlobalVariableTest extends PepperTestCase
 {
-
     public function setUp()
     {
         $this->code = '<?php global $user;';
@@ -57,5 +56,4 @@ class GlobalVariableTest extends PepperTestCase
             $messages[0]->node instanceof PHPParser_Node_Stmt_Global
         );
     }
-
 }

@@ -56,5 +56,4 @@ class DoubleEqualsTest extends PepperTestCase
             $messages[0]->node instanceof PHPParser_Node_Expr_Equal
         );
     }
-
 }
