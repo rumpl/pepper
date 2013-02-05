@@ -52,10 +52,10 @@ try {
 
     $conf = $options->getOption('c');
     if ($conf === NULL) {
-        $conf = './pepperconfig.yaml';
+        $conf = './pepperconfig.yml';
     }
 
-    $ar = Yaml::parse(__DIR__ . '/config.yaml');
+    $ar = Yaml::parse(__DIR__ . '/config.yml');
     $par = Yaml::parse($conf);
 
     $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
