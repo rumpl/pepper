@@ -19,7 +19,7 @@
          verbose="true">
     <testsuites>
         <testsuite name="Rules Test Suite">
-            <directory>test</directory>
+            <directory>test/Pepper/Rule</directory>
         </testsuite>
     </testsuites>
 </phpunit>
