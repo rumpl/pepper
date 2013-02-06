@@ -16,18 +16,23 @@ Will warn you about the usage of the double equals statement.
 PHP has two comparison operators, the equals operator (==) and the identity operator (===). It is considered bad practice to use the double equals operator.
 
 Some examples why using the double equals operator may introduce bugs in your code: 
+    
     1 == '1' // true, note that this can be useful in some cases
     '1 some text' == '1' // false
     '1 some text' == 1 // true
 
 Also, note that 
+    
     '424572979023470974209347293457249724907234928347' == $n;
+
 is way slower than
+
     $n == '424572979023470974209347293457249724907234928347';
 
 I will explain this in a second.
 
 On the other hand, here is what would the identity operator return:
+
     1 === '1' // false
     '1 some text' === '1' // false
     '1 some text' === 1 // false
