@@ -56,4 +56,11 @@ class GlobalVariableTest extends PepperTestCase
             $messages[0]->node instanceof PHPParser_Node_Stmt_Global
         );
     }
+
+    public function testShouldFindAllGlobals()
+    {
+        $this->code = '<?php global $var1; global $var2;';
+        $messages = $this->getPepperMessages();
+        $this->assertEquals(2, count($messages));
+    }
 }
