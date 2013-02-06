@@ -80,6 +80,11 @@ class Context
             ));
         }
 
+        if ($node instanceof \PHPParser_Node_Stmt_Global) {
+//            /** @var $node \PHPParser_Node_Stmt_Global */
+            $this->_definedVariables += $node->vars;
+        }
+
         if ($node instanceof \PHPParser_Node_Expr_Variable) {
             $this->_variables[] = $node;
         }
