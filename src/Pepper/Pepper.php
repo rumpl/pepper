@@ -53,7 +53,7 @@ class Pepper
         return $this->analyzeCode(file_get_contents($file));
     }
 
-    private function addVisitor($traverse, $ruleName, $ruleConfiguration) {
+    private function addVisitor(PHPParser_NodeTraverser $traverse, $ruleName, $ruleConfiguration) {
         $arguments = array('report' => $this->report);
 
         if (isset($ruleConfiguration['params'])) {
@@ -64,7 +64,6 @@ class Pepper
 
         $refClass = new ReflectionClass($ruleName);
         $classInstance = $refClass->newInstanceArgs($arguments);
-        /** @var $classInstance \PHPParser_NodeVisitor */
         $traverse->addVisitor($classInstance);
     }
 

@@ -51,7 +51,7 @@ try {
     }
 
     $conf = $options->getOption('c');
-    if ($conf === NULL) {
+    if ($conf === null) {
         $conf = './pepperconfig.yml';
     }
 
