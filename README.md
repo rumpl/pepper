@@ -5,6 +5,13 @@ that are too long or using the double equals.
 
 Pepper is good for you.
 
+## Installation
+
+With composer for a local lala.
+
+With PEAR:
+   pear install pepper
+
 ## Rules
 
 Pepper has a growing number of rules that you can activate at your will:
@@ -36,6 +43,15 @@ On the other hand, here is what would the identity operator return:
     1 === '1' // false
     '1 some text' === '1' // false
     '1 some text' === 1 // false
+
+Here is an overview of the _double equals_ algorithm:
+Let _a_ and _b_ be the left and right values.
+ * Compare the types of the two values
+ * If the two values have the same type, compare their values.
+ * If the two values don't have the same type:
+    * If _a_ is a string and _b_ is a number, convert _a_ to a number and then compare the two values.
+    * yada yada yada
+
 
 All that being said, you should not follow this kind of "best practices" blindly. It is important that you understand what is happening behind the scene in order to use the appropriate operators. This is exactly why **Pepper** can be configured not to show warnings line by line in your code.
 
