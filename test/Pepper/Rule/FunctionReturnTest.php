@@ -117,4 +117,21 @@ class FunctionReturnTest extends PepperTestCase
         $messages = $this->getPepperMessages();
         $this->assertEquals(1, count($messages));
     }
+
+    public function testShouldWorkWithIfElse()
+    {
+        $this->code = '<?php
+        function test() {
+            if (false) {
+                if (true) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }';
+
+        $messages = $this->getPepperMessages();
+        $this->assertEquals(1, count($messages));
+    }
 }
