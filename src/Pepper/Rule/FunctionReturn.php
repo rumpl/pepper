@@ -29,66 +29,79 @@ use \Pepper\PepperRule;
 
 class FunctionReturn extends PepperRule
 {
+    private $atLeastOneReturns;
+    private $pathReturns;
+    private $current;
+    private $isReachable;
+
+    public function beforeTraverse(array $nodes)
+    {
+        $this->current = 0;
+    }
+
     public function enterNode(\PHPParser_Node $node)
     {
+        if ($node instanceof \PHPParser_Node_Stmt_Function || $node instanceof \PHPParser_Node_Stmt_ClassMethod) {
+            $this->isReachable = true;
+
+            $this->current = 0;
+            $this->pathReturns = array(false);
+
+            $this->atLeastOneReturns = false;
+
+            return;
+        }
+
+        if ($this->isBranch($node)) {
+            $this->current++;
+            $this->pathReturns[$this->current] = false;
+        }
+
+        if ($node instanceof \PHPParser_Node_Stmt_Return) {
+            $this->atLeastOneReturns = true;
+            $this->pathReturns[$this->current] = true;
+        }
+    }
+
+    public function leaveNode(\PHPParser_Node $node)
+    {
+        if ($node instanceof \PHPParser_Node_Stmt_If && isset($node->else)) {
+            $this->isReachable = false;
+        }
+
+        if ($this->isBranch($node)) {
+            $this->current--;
+
+            if (!$this->isReachable) {
+                $this->pathReturns[$this->current] = true;
+            }
+
+            $this->isReachable = true;
+        }
+
         if (!($node instanceof \PHPParser_Node_Stmt_Function || $node instanceof \PHPParser_Node_Stmt_ClassMethod)) {
             return;
         }
 
-        $returns = false;
-
-        $numStmts = count($node->stmts);
-
-        for ($i = 0; $i < $numStmts; $i++) {
-            $stmt = $node->stmts[$i];
-//            var_dump($stmt);
-            $returns |= $this->statementReturns($stmt);
-
-            if ($i === $numStmts - 1) {
-                break;
-            }
+        if (!$this->atLeastOneReturns) {
+            return;
         }
 
-        if ($returns && !($node->stmts[$numStmts - 1] instanceof \PHPParser_Node_Stmt_Return)) {
-            $this->addMessage($node);
+        foreach ($this->pathReturns as $pathReturn) {
+            if (!$pathReturn) {
+                $this->addMessage($node);
+                return;
+            }
         }
     }
 
-    private function statementReturns(\PHPParser_Node $stmt)
+    private function isBranch($stmt)
     {
-        if ($stmt instanceof \PHPParser_Node_Stmt_Return) {
-            return true;
-        }
-
-        $returns = false;
-        if ($stmt instanceof \PHPParser_Node_Stmt_If ||
+        return $stmt instanceof \PHPParser_Node_Stmt_If ||
             $stmt instanceof \PHPParser_Node_Stmt_Else ||
             $stmt instanceof \PHPParser_Node_Stmt_ElseIf ||
             $stmt instanceof \PHPParser_Node_Stmt_For ||
             $stmt instanceof \PHPParser_Node_Stmt_Foreach ||
-            $stmt instanceof \PHPParser_Node_Stmt_While
-        ) {
-            foreach ($stmt->stmts as $s) {
-                $returns |= $this->statementReturns($s);
-            }
-
-            if (isset($stmt->elseifs)) {
-                foreach ($stmt->elseifs as $ei) {
-                    foreach($ei->stmts as $s) {
-                        $returns |= $this->statementReturns($s);
-                    }
-                }
-            }
-
-            if (isset($stmt->else)) {
-                foreach ($stmt->else->stmts as $s) {
-                    $returns |= $this->statementReturns($s);
-                }
-            }
-
-            return $returns;
-        }
-
-        return false;
+            $stmt instanceof \PHPParser_Node_Stmt_While;
     }
 }

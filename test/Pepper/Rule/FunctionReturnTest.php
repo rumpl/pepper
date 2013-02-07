@@ -41,13 +41,22 @@ class FunctionReturnTest extends PepperTestCase
         );
     }
 
-    public function testShoudFindMissingReturnStatementAfterIf() {
-        $this->code = '<?php function test() { if (false) { return 0; } print 1; }';
+    public function testShoudFindMissingReturnStatementAfterIf()
+    {
+        $this->code = '<?php
+        function test() {
+            if (false) {
+                return 0;
+            }
+            print 1;
+        }';
+
         $messages = $this->getPepperMessages();
         $this->assertEquals(1, count($messages));
     }
 
-    public function testShouldFindMissingReturnStatementComplex() {
+    public function testShouldFindMissingReturnStatementComplex()
+    {
         $this->code = '<?php
         function test() {
             if (true) {
@@ -92,5 +101,20 @@ class FunctionReturnTest extends PepperTestCase
 
         $messages = $this->getPepperMessages();
         $this->assertEquals(0, count($messages));
+    }
+
+    public function testShouldFindReturnInWhileLoop()
+    {
+        $this->code = '<?php
+        function test() {
+            while(true) {
+                if (false) {
+                    return 1;
+                }
+            }
+        }';
+
+        $messages = $this->getPepperMessages();
+        $this->assertEquals(1, count($messages));
     }
 }
