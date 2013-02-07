@@ -4,7 +4,7 @@ Pepper\Rule\TooManyMethods:
     threshold: 15
 
 Pepper\Rule\MethodTooLong:
-  level: warning
+  level: error
   params:
     threshold: 35
 

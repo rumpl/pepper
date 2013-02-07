@@ -84,16 +84,24 @@ class ConsoleReport implements Report
 
     private function dumpMessage(ReportMessage $message)
     {
-        $mess = "\t" . $this->interpolate($message);
+        $prefix = '•';
+
+        $level = $this->getLevel($message);
+        if ($level === 'error') {
+            $prefix = '✖';
+        }
+        if ($level === 'warning') {
+            $prefix = '⚠';
+        }
+
+        $mess = "    " . $prefix . ' ' . $this->interpolate($message);
 
         print $this->color->fg($this->getColor($message), $mess) . PHP_EOL;
     }
 
     private function getColor(ReportMessage $message)
     {
-        $ruleClass = get_class($message->rule);
-        $ruleConfiguration = $this->pepperConfiguration[$ruleClass];
-        $level = $ruleConfiguration['level'];
+        $level = $this->getLevel($message);
 
         if ($level === 'notice') {
             return 'white';
@@ -108,5 +116,12 @@ class ConsoleReport implements Report
         }
 
         return 'white';
+    }
+
+    private function getLevel($message)
+    {
+        $ruleClass = get_class($message->rule);
+        $ruleConfiguration = $this->pepperConfiguration[$ruleClass];
+        return $ruleConfiguration['level'];
     }
 }

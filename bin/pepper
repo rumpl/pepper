@@ -47,21 +47,23 @@ try {
 
     if ($options->getOption('h') || count($options->getOptions()) === 0) {
         $options->showHelp();
-        exit(0);
+    } else {
+
+        $conf = $options->getOption('c');
+        if ($conf === null) {
+            $conf = './pepperconfig.yml';
+        }
+
+        $ar = Yaml::parse(__DIR__ . '/config.yml');
+        $par = Yaml::parse($conf);
+
+        $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
+
+        $report = $pepper->analyzeFile($options->getOption('file'));
+        $report->dump();
     }
-
-    $conf = $options->getOption('c');
-    if ($conf === null) {
-        $conf = './pepperconfig.yml';
-    }
-
-    $ar = Yaml::parse(__DIR__ . '/config.yml');
-    $par = Yaml::parse($conf);
-
-    $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
-
-    $report = $pepper->analyzeFile($options->getOption('file'));
-    $report->dump();
 } catch (Exception $e) {
     print $color->fg('red', $e->getMessage()) . PHP_EOL . PHP_EOL;
 }
+
+print PHP_EOL . $color->fg('green', "★ Made with love ★") . PHP_EOL;
