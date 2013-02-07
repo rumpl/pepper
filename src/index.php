@@ -115,25 +115,25 @@ class PepperBuilderFactory extends PHPParser_BuilderFactory
 }
 
 // Test avec un peu d'injection de dependances.
-$container = new ContainerBuilder();
-$container->register('factory', 'PepperBuilderFactory');
-
-//$factory = new PepperBuilderFactory;
-
-/** @var $factory PepperBuilderFactory */
-$factory = $container->get('factory');
-
-$node = $factory->buildInterface('Test')
-  ->addStmt(
-    $factory
-      ->method('test')
-      ->addParam(new PHPParser_Builder_Param('toto'))
-)
-  ->addStmt($factory->method('toto'))
-  ->getNode();
-
-$pp = new PHPParser_PrettyPrinter_Default();
-$interfaceStatements = array($node);
+//$container = new ContainerBuilder();
+//$container->register('factory', 'PepperBuilderFactory');
+//
+////$factory = new PepperBuilderFactory;
+//
+///** @var $factory PepperBuilderFactory */
+//$factory = $container->get('factory');
+//
+//$node = $factory->buildInterface('Test')
+//  ->addStmt(
+//    $factory
+//      ->method('test')
+//      ->addParam(new PHPParser_Builder_Param('toto'))
+//)
+//  ->addStmt($factory->method('toto'))
+//  ->getNode();
+//
+//$pp = new PHPParser_PrettyPrinter_Default();
+//$interfaceStatements = array($node);
 //print $pp->prettyPrint($interfaceStatements) . PHP_EOL;
 
 $ar = Yaml::parse('config.yaml');
