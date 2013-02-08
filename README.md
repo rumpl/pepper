@@ -20,7 +20,7 @@ With PEAR:
 ## Configuration
 
 By default, pepper will search for the `pepperconfig.yml` file in the current directory. If none is found it will run with some default configuration.
-The `pepperconfig.yml` sould have the following ...:
+The `pepperconfig.yml` sould be as follows:
 
     RuleName1:
         level: [notice|warning|error]
