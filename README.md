@@ -14,6 +14,10 @@ With PEAR:
 
 ## Usage
 
+Run pepper without any parameters to see the usage.
+
+To analyze a single file:
+
     pepper -f <file>
 
 
@@ -34,7 +38,7 @@ The `pepperconfig.yml` sould be as follows:
             param1: value1
             param2: value2
 
-The `params` is optional and is used only if the rule can be configured. For exemple, the rule for global variables doesn't need any configuration,
+The `params` key is optional and is used only if the rule can be configured. For exemple, the rule for global variables doesn't need any configuration,
 on the other hand, the rule for checking method length takes a parameter named `threshold`.
 
 Here is a real example of a pepper configuration file :
