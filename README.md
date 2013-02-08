@@ -37,6 +37,20 @@ The `pepperconfig.yml` sould be as follows:
 The `params` is optional and is used only if the rule can be configured. For exemple, the rule for global variables doesn't need any configuration,
 on the other hand, the rule for checking method length takes a parameter named `threshold`.
 
+Here is a real example of a pepper configuration file :
+
+    Pepper\Rule\MethodTooLong:
+      level: warning
+      params:
+        threshold: 2
+
+    Pepper\Rule\UnnecessaryIf:
+      level: warning
+
+    Pepper\Rule\GlobalVariable:
+      level: notice
+
+
 ## Rules
 
 Pepper has a growing number of rules that you can activate at your will:
