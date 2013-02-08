@@ -16,6 +16,27 @@ With PEAR:
 
     pepper -f <file>
 
+
+## Configuration
+
+By default, pepper will search for the `pepperconfig.yml` file in the current directory. If none is found it will run with some default configuration.
+The `pepperconfig.yml` sould have the following ...:
+
+    RuleName1:
+        level: [notice|warning|error]
+        params:
+            param1: value1
+            param2: value2
+
+    RuleName2:
+        level: [notice|warning|error]
+        params:
+            param1: value1
+            param2: value2
+
+The `params` is optional and is used only if the rule can be configured. For exemple, the rule for global variables doesn't need any configuration,
+on the other hand, the rule for checking method length takes a parameter named `threshold`.
+
 ## Rules
 
 Pepper has a growing number of rules that you can activate at your will:
@@ -24,7 +45,8 @@ Pepper has a growing number of rules that you can activate at your will:
 
 Will warn you about the usage of the double equals statement.
 
-PHP has two comparison operators, the equals operator (==) and the identity operator (===). It is considered bad practice to use the double equals operator.
+PHP has two comparison operators, the equals operator (==) and the identity operator (===).
+It is considered bad practice to use the double equals operator.
 
 Some examples why using the double equals operator may introduce bugs in your code:
 
