@@ -17,43 +17,45 @@ With PEAR:
 Run pepper without any parameters to see the usage.
 
 To analyze a single file:
-
-    pepper -f <file>
-
+```bash
+pepper -f <file>
+```
 
 ## Configuration
 
 By default, pepper will search for the `pepperconfig.yml` file in the current directory. If none is found it will run with some default configuration.
 The `pepperconfig.yml` sould be as follows:
 
-    RuleName1:
-        level: [notice|warning|error]
-        params:
-            param1: value1
-            param2: value2
+```yaml
+RuleName1:
+  level: [notice|warning|error]
+  params:
+      param1: value1
+      param2: value2
 
-    RuleName2:
-        level: [notice|warning|error]
-        params:
-            param1: value1
-            param2: value2
+RuleName2:
+  level: [notice|warning|error]
+  params:
+      param1: value1
+      param2: value2
+```
 
 The `params` key is optional and is used only if the rule can be configured. For exemple, the rule for global variables doesn't need any configuration,
 on the other hand, the rule for checking method length takes a parameter named `threshold`.
 
 Here is a real example of a pepper configuration file :
+```yaml
+Pepper\Rule\MethodTooLong:
+   level: warning
+   params:
+      threshold: 2
 
-    Pepper\Rule\MethodTooLong:
-      level: warning
-      params:
-        threshold: 2
+Pepper\Rule\UnnecessaryIf:
+   level: warning
 
-    Pepper\Rule\UnnecessaryIf:
-      level: warning
-
-    Pepper\Rule\GlobalVariable:
-      level: notice
-
+Pepper\Rule\GlobalVariable:
+   level: notice
+```
 
 ## Rules
 
@@ -67,27 +69,27 @@ PHP has two comparison operators, the equals operator (==) and the identity oper
 It is considered bad practice to use the double equals operator.
 
 Some examples why using the double equals operator may introduce bugs in your code:
-
-    1 == '1' // true, note that this can be useful in some cases
-    '1 some text' == '1' // false
-    '1 some text' == 1 // true
-
+```php
+1 == '1' // true, note that this can be useful in some cases
+'1 some text' == '1' // false
+'1 some text' == 1 // true
+```
 Also, note that
-
-    '424572979023470974209347293457249724907234928347' == $n;
-
+```php
+'424572979023470974209347293457249724907234928347' == $n;
+```
 is way slower than
-
-    $n == '424572979023470974209347293457249724907234928347';
-
+```php
+$n == '424572979023470974209347293457249724907234928347';
+```
 I will explain this in a second.
 
 On the other hand, here is what would the identity operator return:
-
-    1 === '1' // false
-    '1 some text' === '1' // false
-    '1 some text' === 1 // false
-
+```php
+1 === '1' // false
+'1 some text' === '1' // false
+'1 some text' === 1 // false
+```
 Here is an overview of the _double equals_ algorithm:
 Let _a_ and _b_ be the left and right values.
  * Compare the types of the two values
