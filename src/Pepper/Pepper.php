@@ -26,6 +26,8 @@
 namespace Pepper;
 
 use PHPParser_NodeTraverser;
+use Pepper\Metric\ClassMetric;
+use DirectoryIterator;
 use ReflectionClass;
 use PHPParser_Lexer;
 use PHPParser_Parser;
@@ -53,7 +55,8 @@ class Pepper
         return $this->analyzeCode(file_get_contents($file));
     }
 
-    private function addVisitor(PHPParser_NodeTraverser $traverse, $ruleName, $ruleConfiguration) {
+    private function addVisitor(PHPParser_NodeTraverser $traverse, $ruleName, $ruleConfiguration)
+    {
         $arguments = array('report' => $this->report);
 
         if (isset($ruleConfiguration['params'])) {
@@ -88,5 +91,39 @@ class Pepper
         $traverse->traverse($statements);
 
         return $this->report;
+    }
+
+    public function analyzeDirectory($dir)
+    {
+        $parser = new PHPParser_Parser(new PHPParser_Lexer);
+
+        $project = new Project();
+
+        $classMetric = new ClassMetric($project);
+
+        $traverse = new PHPParser_NodeTraverser;
+        $traverse->addVisitor($classMetric);
+
+        $dirs = array($dir);
+        while (count($dirs) !== 0) {
+            $dir = array_pop($dirs);
+
+            foreach (new DirectoryIterator($dir) as $fileInfo) {
+                /** @var $fileInfo DirectoryIterator */
+                $file_extension = pathinfo($fileInfo->getFilename(), PATHINFO_EXTENSION);
+                if ($fileInfo->isFile()) {
+                    if ($file_extension === 'php') {
+                        $statements = $parser->parse(file_get_contents($fileInfo->getPathname()));
+                        $traverse->traverse($statements);
+                    }
+                }
+
+                if ($fileInfo->isDir() && !$fileInfo->isDot()) {
+                    $dirs[] = $fileInfo->getPathname();
+                }
+            }
+        }
+
+        return $project;
     }
 }

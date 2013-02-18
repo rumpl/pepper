@@ -34,21 +34,24 @@ use Ulrichsg\Getopt;
 
 $color = new Color;
 
-print $color->fg('green', 'Pepper 0.0.1 by Djordje Lukic') . PHP_EOL . PHP_EOL;
-
 try {
     $options = new Getopt(array(
         array('f', 'file', Getopt::REQUIRED_ARGUMENT, 'File to analyze'),
+        array('d', 'directory', Getopt::REQUIRED_ARGUMENT, 'Directory to analyze'),
         array('c', 'configuration', Getopt::REQUIRED_ARGUMENT, 'Alternatie configuration file'),
+        array('q', 'quiet', Getopt::NO_ARGUMENT, 'Quiet mode, will not output footer and header'),
         array('h', 'help', Getopt::NO_ARGUMENT, 'Show this help'),
     ));
 
     $options->parse();
 
+    if (!$options->getOption('q')) {
+        print $color->fg('green', 'Pepper 0.0.1 by Djordje Lukic') . PHP_EOL . PHP_EOL;
+    }
+
     if ($options->getOption('h') || count($options->getOptions()) === 0) {
         $options->showHelp();
     } else {
-
         $conf = $options->getOption('c');
         if ($conf === null) {
             $conf = './pepperconfig.yml';
@@ -59,11 +62,15 @@ try {
 
         $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
 
-        $report = $pepper->analyzeFile($options->getOption('file'));
+//        $report = $pepper->analyzeFile($options->getOption('file'));
+        $report = $pepper->analyzeDirectory($options->getOption('directory'));
+//        var_dump($report);
         $report->dump();
+
+        if (!$options->getOption('q')) {
+            print PHP_EOL . $color->fg('green', "★ Made with love ★") . PHP_EOL;
+        }
     }
 } catch (Exception $e) {
     print $color->fg('red', $e->getMessage()) . PHP_EOL . PHP_EOL;
 }
-
-print PHP_EOL . $color->fg('green', "★ Made with love ★") . PHP_EOL;
