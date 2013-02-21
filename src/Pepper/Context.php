@@ -88,7 +88,6 @@ class Context
         if ($node instanceof \PHPParser_Node_Expr_Variable) {
             $this->_variables[] = $node;
         }
-
     }
 
     public function dump()

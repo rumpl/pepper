@@ -78,7 +78,7 @@ class Pepper
      */
     public function analyzeCode($code)
     {
-        $traverse = new PHPParser_NodeTraverser;
+        $traverse = new NodeTraverser;
 
         $parser = new PHPParser_Parser(new PHPParser_Lexer);
 
@@ -101,7 +101,7 @@ class Pepper
 
         $classMetric = new ClassMetric($project);
 
-        $traverse = new PHPParser_NodeTraverser;
+        $traverse = new NodeTraverser;
         $traverse->addVisitor($classMetric);
 
         $dirs = array($dir);
@@ -114,7 +114,11 @@ class Pepper
                 if ($fileInfo->isFile()) {
                     if ($file_extension === 'php') {
                         $statements = $parser->parse(file_get_contents($fileInfo->getPathname()));
-                        $traverse->traverse($statements);
+                        print $fileInfo->getPathname() . PHP_EOL;
+                        try {
+                            $traverse->traverse($statements);
+                        } catch (\Exception $e) {
+                        }
                     }
                 }
 

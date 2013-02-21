@@ -36,6 +36,7 @@ class MethodTooLong extends PepperRule
         parent::__construct($report);
         $this->threshold = $threshold;
     }
+
     public function enterNode(\PHPParser_Node $node)
     {
         if (!($node instanceof \PHPParser_Node_Stmt_ClassMethod || $node instanceof \PHPParser_Node_Stmt_Function)) {
