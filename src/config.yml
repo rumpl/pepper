@@ -1,8 +1,0 @@
-Pepper\Rule\TooManyMethods: Class {name} has too many methods.
-Pepper\Rule\MethodTooLong: Method {name} is too long.
-Pepper\Rule\UnnecessaryIf: Unnecessary if statement.
-Pepper\Rule\GlobalVariable: Use of global variable.
-Pepper\Rule\UndefinedVariable: Undefined variable {name} used.
-Pepper\Rule\DoubleEquals: Use of double equals statement.
-Pepper\Rule\UnnecessaryElse: Unecessary else statement used on line {line}.
-Pepper\Rule\NestingTooDeep: Nesting too deep.

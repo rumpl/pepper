@@ -15,23 +15,39 @@ class Project
 
     public function addClass(PepperClass $class)
     {
-        $this->_classes [$class->fullName()] = $class;
+        $this->_classes[$class->fullName()] = $class;
+    }
+
+    /**
+     * @param $fullName
+     * @return null|PepperClass
+     */
+    public function getClass($fullName)
+    {
+        return isset($this->_classes[$fullName]) ? $this->_classes[$fullName] : null;
+    }
+
+    /**
+     * @param $class PepperClass
+     * @return null|PepperClass
+     */
+    public function getParent(PepperClass $class)
+    {
+        $parent = $class->parentFullName();
+        return isset($this->_classes[$parent]) ? $this->_classes[$parent] : null;
     }
 
     public function dump()
     {
-        foreach ($this->_classes as $fullName => $class) {
+        foreach ($this->_classes as $class) {
             /** @var $class PepperClass */
-            $parent = $class->parentFullName();
-
-            print $fullName . ($parent ? ' extends ' . $parent : '');
-
-            if (isset($this->_classes[$parent])) {
-                $grandParent =$this->_classes[$parent]->parentFullName();
-                print ($grandParent ? ' extends ' . $grandParent : '') . PHP_EOL;
-            } else {
-                print PHP_EOL;
+            print $class->fullName();
+            while (($parent = $this->getParent($class)) !== null) {
+                print ' extends ' . $parent->fullName();
+                $class = $parent;
             }
+
+            print PHP_EOL;
         }
     }
 }

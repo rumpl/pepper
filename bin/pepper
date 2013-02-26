@@ -62,8 +62,8 @@ try {
 
         $pepper = new Pepper(new ConsoleReport($ar, $par, new Color), $par);
 
-        $report = $pepper->analyzeFile($options->getOption('file'));
-//        $report = $pepper->analyzeDirectory($options->getOption('directory'));
+//        $report = $pepper->analyzeFile($options->getOption('file'));
+        $report = $pepper->analyzeDirectory($options->getOption('directory'));
 //        var_dump($report);
         $report->dump();
 

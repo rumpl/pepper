@@ -28,3 +28,5 @@ Pepper\Rule\NestingTooDeep:
   params:
     threshold: 3
 
+Pepper\Rule\ExcessiveInheritance:
+  level: error

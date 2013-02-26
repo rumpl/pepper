@@ -6,3 +6,4 @@ Pepper\Rule\UndefinedVariable: Undefined variable {name} used on line {line}.
 Pepper\Rule\DoubleEquals: Use of double equals statement on line {line}.
 Pepper\Rule\UnnecessaryElse: Unecessary else statement used on line {line}.
 Pepper\Rule\NestingTooDeep: Nesting too deep on line {line}.
+Pepper\Rule\ExcessiveInheritance: INHERITANCE!!! {line}.

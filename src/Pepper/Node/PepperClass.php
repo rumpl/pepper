@@ -42,9 +42,9 @@ class PepperClass extends Node
 
     private function _findFullyQualifiedClassName($className)
     {
-        foreach($this->_uses as $use) {
+        foreach ($this->_uses as $use) {
             /** @var $use \PHPParser_Node_Stmt_Use */
-            foreach($use->uses as $u) {
+            foreach ($use->uses as $u) {
                 /** @var $use \PHPParser_Node_Stmt_UseUSe */
                 if ($u->alias === $className) {
                     return implode('\\', $u->name->parts);
@@ -54,4 +54,5 @@ class PepperClass extends Node
 
         return $this->_namespace . '\\' . $className;
     }
+
 }

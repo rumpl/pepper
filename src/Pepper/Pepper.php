@@ -95,7 +95,7 @@ class Pepper
 
     public function analyzeDirectory($dir)
     {
-        $parser = new PHPParser_Parser(new PHPParser_Lexer);
+        $parser = new PHPParser_Parser(new FileLexer);
 
         $project = new Project();
 
@@ -103,6 +103,15 @@ class Pepper
 
         $traverse = new NodeTraverser;
         $traverse->addVisitor($classMetric);
+
+        foreach ($this->configuration as $ruleName => $ruleConfiguration) {
+            if ($ruleName !== 'Pepper\Rule\ExcessiveInheritance') {
+                $this->addVisitor($traverse, $ruleName, $ruleConfiguration);
+            }
+        }
+
+        $CC = new \Pepper\Rule\ExcessiveInheritance($this->report, $project);
+        $traverse->addVisitor($CC);
 
         $dirs = array($dir);
         while (count($dirs) !== 0) {
@@ -112,9 +121,8 @@ class Pepper
                 /** @var $fileInfo DirectoryIterator */
                 $file_extension = pathinfo($fileInfo->getFilename(), PATHINFO_EXTENSION);
                 if ($fileInfo->isFile()) {
-                    if ($file_extension === 'php') {
-                        $statements = $parser->parse(file_get_contents($fileInfo->getPathname()));
-                        print $fileInfo->getPathname() . PHP_EOL;
+                    if ($file_extension === 'php' || $file_extension === 'inc') {
+                        $statements = $parser->parse($fileInfo->getPathname());
                         try {
                             $traverse->traverse($statements);
                         } catch (\Exception $e) {
@@ -128,6 +136,6 @@ class Pepper
             }
         }
 
-        return $project;
+        return $this->report;
     }
 }

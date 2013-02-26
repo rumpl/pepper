@@ -63,7 +63,14 @@ class ConsoleReport implements Report
 
     public function dump()
     {
+        $file = '';
         foreach ($this->messages as $message) {
+            $messageFile = $message->node->getAttribute('fileName');
+            if ($messageFile !== $file) {
+                print PHP_EOL . $messageFile . PHP_EOL;
+                $file = $messageFile;
+            }
+
             $this->dumpMessage($message);
         }
     }
